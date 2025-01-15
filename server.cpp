@@ -32,13 +32,14 @@ pair<string, string> read_request(const SOCKET& socket, const int& BUFFER_SIZE) 
         return get_file(buff); // Assume get_file may throw exceptions
 
     } catch (const string& e) {
-        if (e == "can't read file") {
+        if (e == "can't read file" || "problems with path" ) {
             return {read_file("errors/404/index.html"), "html"};
 
         } else if (e == "no permission") {
-            return get_file(buff);
+            return {"500", "Internal Server Error: NO ACCESS"};
         }
 
+        // 2-?
         println("Error processing request: " + string(e), ERROR_STYLE);
         return {"500", "Internal Server Error: " + string(e)};
 

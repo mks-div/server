@@ -10,7 +10,10 @@
 #include "logger.cpp"
 
 using namespace std;
-
+//hello world
+void new_one(){
+    cout << "hello";
+}
 /*
 string make_500_response(const string& error_message) {
     return "HTTP/1.1 500 Internal Server Error\r\n"

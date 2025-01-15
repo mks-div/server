@@ -1,0 +1,4 @@
+unused/
+build/
+.vscode/
+*.exe

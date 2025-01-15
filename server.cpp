@@ -10,6 +10,10 @@
 #include "logger.cpp"
 
 using namespace std;
+//hello world
+void new_one(){
+
+}
 
 /*
 string make_500_response(const string& error_message) {

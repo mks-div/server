@@ -30,11 +30,22 @@ string get_path(const string& request) {
 }
 
 string get_file_extension(const string& path) {
-    string file_extension = {};
-    unsigned int idx = path.size() - 1;
 
-    while (path[idx] != '.' && idx >= 0) {
+    if (path.empty()) {
+        throw string{"no path"};
+    }
+
+    string file_extension = {};
+    long long unsigned int idx = (!path.size() ? 0 : path.size() - 1); 
+
+    while (path[idx] != '.') {  
+        
         file_extension = path[idx] + file_extension;
+        
+        if (!idx) { // it's better not to write it in while conditions
+            throw string {"incorrect path"};
+        }
+        
         idx --;
     } 
     return file_extension;
@@ -78,18 +89,32 @@ string read_image(const string& path) {
     return string(contents.begin(), contents.end());
 }
 
+
 pair<string, string> get_file(const string& request) { 
     // for writing server message
-    
+
     if (!give_access(request)) {
         println("no permission", ERROR_STYLE);
         throw string{"no permission"};
-    } print(request);
+    } cout << request;
 
-    string path_to_file = get_path(request);
-    string file_extension = get_file_extension(path_to_file);
+    string path_to_file = {};
+    string file_extension = {};
 
 
+    try {
+        path_to_file = get_path(request);
+        file_extension = get_file_extension(path_to_file);
+    } catch(string error_message) {
+        if (
+            error_message == "no path" ||
+            error_message == "incorrect path"
+        ) {
+            throw string {"problems with path"};
+        }
+    }
+
+    // read file
     try {
         if (file_extension != "png") // need to check with map or set
             return {read_file(path_to_file), file_extension};
@@ -102,4 +127,3 @@ pair<string, string> get_file(const string& request) {
 
     throw string {"unknown error occured"};
 }
-

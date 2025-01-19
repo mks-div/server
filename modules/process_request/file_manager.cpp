@@ -1,9 +1,12 @@
 
 #include <iostream>
+#include <vector>
+
 #include <fstream>
 #include <sstream>
-#include <vector>
-#include"logger.cpp"
+
+#include "C:/projects/server/modules/utility/utility.h"
+#include "C:/projects/server/modules/utility/logger.cpp"
 
 using namespace std;
 
@@ -56,8 +59,8 @@ string get_file_extension(const string& path) {
 string read_file(const string& path) { 
     ifstream file;
     stringstream buf;
-
-    file.open("files/web/" + path);
+    cout << "path:" << path << endl;
+    file.open("C:/projects/server/files/web/" + path);
 
     if (file.fail()){
         println("can't read text file", ERROR_STYLE);
@@ -76,7 +79,7 @@ string read_file(const string& path) {
 // image reader
 string read_image(const string& path) {
 
-    ifstream stream("files/web/" + path, ios::in | ios::binary);
+    ifstream stream("C:/projects/server/files/web/" + path, ios::in | ios::binary);
 
     if (stream.fail()) {
         println("can't read image file", ERROR_STYLE);
@@ -90,7 +93,7 @@ string read_image(const string& path) {
 }
 
 
-pair<string, string> get_file(const string& request) { 
+answer_format get_file(const string& request) { 
     // for writing server message
 
     if (!give_access(request)) {
@@ -117,9 +120,9 @@ pair<string, string> get_file(const string& request) {
     // read file
     try {
         if (file_extension != "png") // need to check with map or set
-            return {read_file(path_to_file), file_extension};
+            return answer_format(read_file(path_to_file), file_extension, "GET");
         else
-            return {read_image(path_to_file), file_extension};
+            return answer_format(read_image(path_to_file), file_extension, "GET");
         
     } catch (string error_message) {
         throw error_message;

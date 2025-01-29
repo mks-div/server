@@ -9,9 +9,9 @@
 #include <winsock2.h>
 #include <Ws2tcpip.h>
 
-#include "C:/projects/server/modules/utility/utility.h"
-#include "C:/projects/server/modules/utility/logger.cpp"
-#include "C:/projects/server/modules/process_request/process_request.cpp"
+#include "modules/utility/utility.h"
+#include "modules/utility/logger.cpp"
+#include "modules/process_request/process_request.cpp"
 
 using namespace std;
 // notes:

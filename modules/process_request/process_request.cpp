@@ -1,10 +1,10 @@
 
 
 #include <iostream>
-#include "C:\projects\server\modules\process_request\file_manager.cpp"
-#include "C:\projects\server\modules\process_request\server_utilities.cpp"
-#include "C:\projects\server\modules\utility\logger.cpp"
-#include "C:\projects\server\modules\utility\utility.h"
+#include "file_manager.cpp"
+#include "server_utilities.cpp"
+#include "..\utility\logger.cpp"
+#include "..\utility\utility.h"
 
 
 using namespace std;
@@ -50,7 +50,7 @@ answer_format read_request(const SOCKET& socket, const int& BUFFER_SIZE) {
         }
 
     } catch (const string& e) {
-        if (e == "can't read file" || "problems with path" ) {
+        if (e == "can't read file" || e == "problems with path" ) {
             return answer_format(read_file("errors/404/index.html"), "html");
         } else if (e == "no permission") {
             return answer_format("500", "Internal Server Error: NO ACCESS", "ERROR");
@@ -79,20 +79,22 @@ string make_server_msg(const answer_format& answer_body) {
             + "\nAccess-Control-Allow-Headers: Content-Type"
             + "\n\n"
             + answer_body.answer_data;
-        cout << endl << '|' << serverMessage << endl;
+        
         return serverMessage;
     } 
     if (answer_body.request_type == "POST") {
+        cout << "|" << answer_body.answer_data << endl; 
+        //http://localhost:8080/full_calculator.html
         string serverMessage = "HTTP/1.1 " 
         + answer_body.answer_type 
         + "\nContent-Type: application/json" 
-        + "\nLocation: http://localhost:8080/index.html"
+        + "\nLocation: " + answer_body.answer_data
         + "\nAccess-Control-Allow-Origin: *"
         + "\nAccess-Control-Allow-Methods: POST, GET, OPTIONS"
         + "\nAccess-Control-Allow-Headers: Content-Type"
         + "\n\n"
         + "param1=value1";
-        cout << endl << '|' << serverMessage << endl;
+        
         return serverMessage;
     }
 
@@ -128,8 +130,7 @@ void process_request(SOCKET socket, const int& BUFFER_SIZE) {
         answer_request(socket, make_server_msg(read_request(socket, BUFFER_SIZE)));
     } catch (const exception& e) {
         println("Unexpected error: " + string(e.what()), ERROR_STYLE);
-        //answer_request(socket, make_500_response("Internal Server Error: " + string(e.what())));
-    }
 
+    }
     closesocket(socket);
 }

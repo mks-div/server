@@ -5,8 +5,8 @@
 #include <fstream>
 #include <sstream>
 
-#include "C:/projects/server/modules/utility/utility.h"
-#include "C:/projects/server/modules/utility/logger.cpp"
+#include "../utility/utility.h"
+#include "../utility/logger.cpp"
 
 using namespace std;
 
@@ -60,7 +60,7 @@ string read_file(const string& path) {
     ifstream file;
     stringstream buf;
     cout << "path:" << path << endl;
-    file.open("C:/projects/server/files/web/" + path);
+    file.open("files/web/" + path);
 
     if (file.fail()){
         println("can't read text file", ERROR_STYLE);
@@ -78,8 +78,8 @@ string read_file(const string& path) {
 
 // image reader
 string read_image(const string& path) {
-
-    ifstream stream("C:/projects/server/files/web/" + path, ios::in | ios::binary);
+    
+    ifstream stream("files/web/" + path, ios::in | ios::binary);
 
     if (stream.fail()) {
         println("can't read image file", ERROR_STYLE);
@@ -88,7 +88,7 @@ string read_image(const string& path) {
 
     vector<char> contents((istreambuf_iterator<char>(stream)), istreambuf_iterator<char>());
 
-
+    
     return string(contents.begin(), contents.end());
 }
 
@@ -123,7 +123,6 @@ answer_format get_file(const string& request) {
             return answer_format(read_file(path_to_file), file_extension, "GET");
         else
             return answer_format(read_image(path_to_file), file_extension, "GET");
-        
     } catch (string error_message) {
         throw error_message;
     }

@@ -1,4 +1,4 @@
-SERVER RELEASE\
+SERVER RELEASE
 
 
 Перед запуском:\

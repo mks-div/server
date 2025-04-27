@@ -9,10 +9,9 @@
 #include <winsock2.h>
 #include <Ws2tcpip.h>
 
-#include "modules/utility/utility.h"
-#include "modules/utility/logger.cpp"
-#include "modules/process_request/process_request.cpp"
-//#include "modules/db/db_test.cpp"
+#include "utility/utility.h"
+#include "utility/logger.cpp"
+#include "process_request/process_request.cpp"
 
 #include <typeinfo>
 
@@ -23,8 +22,6 @@ using namespace std;
 
 int main() {
     println("creating a server", USUAL_STYLE);
-
-    //Database database;
     SOCKET wsocket;
     WSADATA wsaData;
     int server_len;

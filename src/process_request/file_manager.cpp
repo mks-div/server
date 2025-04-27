@@ -60,8 +60,8 @@ string read_file(const string& path) {
     ifstream file;
     stringstream buf;
     cout << "path:" << path << endl;
-    file.open("files/web/" + path);
-
+    //file.open("files/web/" + path);
+    file.open(server_values::WEB_PATH + '/' + path);
     if (file.fail()){
         println("can't read text file", ERROR_STYLE);
         throw string{"can't read file"}; 
@@ -79,7 +79,7 @@ string read_file(const string& path) {
 // image reader
 string read_image(const string& path) {
     
-    ifstream stream("files/web/" + path, ios::in | ios::binary);
+    ifstream stream(server_values::WEB_PATH + '/' + path, ios::in | ios::binary);
 
     if (stream.fail()) {
         println("can't read image file", ERROR_STYLE);

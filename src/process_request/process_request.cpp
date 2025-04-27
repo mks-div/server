@@ -36,7 +36,7 @@ answer_format read_request(const SOCKET& socket, const int& BUFFER_SIZE) {
         return {"500", "Internal Server Error: Failed to read request"};
     }
 
-
+    
     try {
         string request_type = get_req_type(buff);
         cout << request_type << endl;
@@ -49,26 +49,25 @@ answer_format read_request(const SOCKET& socket, const int& BUFFER_SIZE) {
             return server_answer(buff);
         }
 
+
     } catch (const string& e) {
         if (e == "can't read file" || e == "problems with path" ) {
             return answer_format(read_file("errors/404/index.html"), "html");
         } else if (e == "no permission") {
-            return answer_format("500", "Internal Server Error: NO ACCESS", "ERROR");
+            return answer_format("403", "Internal Server Error: NO ACCESS", "ERROR");
         }
-
-        // 2-?
-        //println("Error processing request: " + string(e), ERROR_STYLE);
-        //return {"500", "Internal Server Error: " + string(e)};
     }
-    return {"500", "Internal Server Error: Failed to read request"};
+
+    return answer_format(read_file("errors/404/index.html"), "html");
 }
 
 string make_server_msg(const answer_format& answer_body) {
     string serverMessage;
+
     if (answer_body.request_type == "GET") {
         string filetype = (answer_body.answer_type != "png" ? "text" : "image");
-
-        string serverMessage = "HTTP/1.1 200 OK\nContent-Type: " 
+        cout << "|" << "GET" << endl; 
+        serverMessage = "HTTP/1.1 200 OK\nContent-Type: " 
             + filetype
             + "/" 
             + answer_body.answer_type
@@ -78,29 +77,40 @@ string make_server_msg(const answer_format& answer_body) {
             + "\nAccess-Control-Allow-Methods: POST, GET, OPTIONS"
             + "\nAccess-Control-Allow-Headers: Content-Type"
             + "\n\n"
-            + answer_body.answer_data;
-        
-        return serverMessage;
+            + answer_body.answer_data;     
     } 
-    if (answer_body.request_type == "POST") {
-        cout << "|" << answer_body.answer_data << endl; 
-        //http://localhost:8080/full_calculator.html
-        string serverMessage = "HTTP/1.1 " 
+    else if (answer_body.request_type == "POST") {
+        cout << "|" << "POST" << endl; 
+        serverMessage = "HTTP/1.1 " 
         + answer_body.answer_type 
         + "\nContent-Type: application/json" 
-        + "\nLocation: " + answer_body.answer_data
         + "\nAccess-Control-Allow-Origin: *"
         + "\nAccess-Control-Allow-Methods: POST, GET, OPTIONS"
         + "\nAccess-Control-Allow-Headers: Content-Type"
-        + "\n\n"
-        + "param1=value1";
-        
-        return serverMessage;
+        + "\n\n";
+    }
+    else if (answer_body.request_type == "ERROR") {
+        serverMessage = "HTTP/1.1 " 
+        + answer_body.answer_data + answer_body.answer_type 
+        + "\nContent-Type: application/json" 
+        + "\nLocation: " 
+        + "\nAccess-Control-Allow-Origin: *"
+        + "\nAccess-Control-Allow-Methods: POST, GET, OPTIONS"
+        + "\nAccess-Control-Allow-Headers: Content-Type";
     }
 
-
     
-
+    if (!answer_body.additional_info.empty()) {
+        serverMessage +=  "\n";
+        serverMessage +=  "{";
+        for (pair<string, string> additional_par : answer_body.additional_info) {
+            serverMessage +=  "\"" + additional_par.first + "\":\"" + additional_par.second + "\",";
+        }
+        serverMessage.pop_back();
+        serverMessage +=  "}";
+    }
+    
+    //cout << serverMessage << endl;
     return serverMessage;
 }
 

@@ -17,20 +17,39 @@
     <script src="app.js" defer></script>
 
   </head>
+  
   <body class="bg-dark text-light">
+    <header>
+      <div class="account-actions">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Account" class="account-icon">
+        <a href="#" class="auth-btn" onclick="openOut()">Выйти</a>
+      </div>
+    </header>
+
+    <div id="outModal" class="modal">
+      <div class="modal-content">
+
+        <span class="close-btn" onclick="closeOut()">&times;</span>
+
+        <h2 id="modalTitle">Вы уверены?</h2>
+
+        <div id="outForm">
+          <button id="outModalLog">Выйти</button>
+          <button id="stayModalLog" onclick="closeOut()">Остаться</button>
+        </div>
+      </div>
+    </div>
+
+
     <div class="container w-50 pt-5">
       <h1>Калькулятор</h1>
       <input
         type="text"
         class="form-control mb-2"
         placeholder="Введите выражение"
-        id="equantity"
+        id="expression"
       />
       <div class="d-flex mb-2">
-        <button class="btn btn-success flex-grow-1 mx-2" id="plus" onclick="changeflag('+')">+</button>
-        <button class="btn btn-danger flex-grow-1 mx-2" id="minus" onclick="changeflag('-')">-</button>
-        <button class="btn btn-secondary flex-grow-1 mx-2" id="multiply" onclick="changeflag('*')">*</button>
-        <button class="btn btn-secondary flex-grow-1 mx-2" id="divis" onclick="changeflag('/')">/</button>
       </div>
       <button class="btn btn-outline-info w-100 mb-2" id="submit" onkeypress="flag=0">
         Вычислить

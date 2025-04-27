@@ -18,6 +18,37 @@
 
   </head>
   <body class="bg-dark text-light">
+
+    <header>
+      <div class="account-actions">
+        <!-- Иконка аккаунта -->
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Account" class="account-icon">
+        
+        <!-- Кнопки авторизации -->
+        <a href="#" class="auth-btn" onclick="openModal('login')">Войти</a>
+        <a href="#" class="auth-btn" onclick="openModal('register')">Регистрация</a>
+      </div>
+    </header>
+
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalTitle">Вход</h2>
+        <p id="wrongdata">неверный логин или пароль</p>
+        <div id="loginForm">
+          <input id="logname" type="text" placeholder="name">
+          <input id="logpwrd" type="password" placeholder="password">
+          <button id="authModalLog">Войти</button>
+        </div>
+        <div id="registerForm" style="display: none;">
+          <input id="regname" type="text" placeholder="name">
+          <input id="reggmail" type="email" placeholder="Email">
+          <input id="regpwrd" type="password" placeholder="password">
+          <button id="authModalReg">Зарегистрироваться</button>
+        </div>
+      </div>
+    </div>
+
     <div class="container w-50 pt-5">
       <h1>Калькулятор</h1>
       <input

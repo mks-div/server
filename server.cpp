@@ -12,6 +12,9 @@
 #include "modules/utility/utility.h"
 #include "modules/utility/logger.cpp"
 #include "modules/process_request/process_request.cpp"
+//#include "modules/db/db_test.cpp"
+
+#include <typeinfo>
 
 using namespace std;
 // notes:
@@ -21,6 +24,7 @@ using namespace std;
 int main() {
     println("creating a server", USUAL_STYLE);
 
+    //Database database;
     SOCKET wsocket;
     WSADATA wsaData;
     int server_len;
@@ -46,14 +50,15 @@ int main() {
     server.sin_addr.s_addr = inet_addr(server_values::IP_ADDRESS);
     server.sin_port = htons(server_values::PORT);
     server_len = sizeof(server);
-
-    if (bind(wsocket, (SOCKADDR*)&server, server_len) != 0) {
-        println("can't bind", ERROR_STYLE);
+    println("1");
+    //cout << type_info(socket_answ);
+    if (bind(wsocket, (SOCKADDR*)&server, server_len) == SOCKET_ERROR) {
+        println("can't bind: " + to_string(WSAGetLastError()), ERROR_STYLE);
         closesocket(wsocket);
         WSACleanup();
         return 1;
     }
-
+    println("2");
     // Listen for connections
     if (listen(wsocket, 20) != 0) {
         println("can't listen", ERROR_STYLE);
@@ -73,7 +78,6 @@ int main() {
             println("can't accept", ERROR_STYLE);
             continue;
         }
-
         // Process request asynchronously
         storage.emplace_back(async(launch::async, process_request, new_wsocket, server_values::BUFFER_SIZE));
     }

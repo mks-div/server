@@ -1,5 +1,6 @@
 build/
-includes/
+includes/*
+!includes/.gitkeep
 .vscode/
 
 *not_used/

@@ -1,6 +1,11 @@
-#include<iostream>
-#include <windows.h>
 #pragma once
+
+#include <iostream>
+#include <windows.h>
+#include "utility.h"
+
+
+
 
 using namespace std;
 const HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -16,8 +21,10 @@ const WORD USUAL_STYLE = 9;
 WORD make_style(const int& foreground, const int& background=0) { return ((background << 4) | foreground); }
 
 
-
-
+void print(const string& text, const WORD& settings=STANDART_STYLE) {
+    cout << text;
+}
+/*
 void print(const string& text, const WORD& settings=STANDART_STYLE) {
 
     if (settings != STANDART_STYLE) 
@@ -34,7 +41,7 @@ void print(const string& text, const WORD& settings=STANDART_STYLE) {
     } SetConsoleTextAttribute(h, STANDART_STYLE);
     cout << '\31';
     
-}
+}*/
 
 void println(const string& text, const WORD& settings=STANDART_STYLE) {
     print(text + '\n', settings);
@@ -60,5 +67,5 @@ int main() {
     << endl;
     cin.get();
     return 0;
-}*/
-
+}
+*/

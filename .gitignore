@@ -1,5 +1,9 @@
-unused/
 build/
+includes/*
+!includes/.gitkeep
+!includes/sqlite3.dll
+!includes/sqlite3.h
 .vscode/
+
+*not_used/
 *.exe
-*modules_test.cpp

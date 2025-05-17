@@ -8,4 +8,5 @@ cmake -DCMAKE_BUILD_TYPE=Debug ^
       -S . ^
       -B build ^
       -G "MinGW Makefiles" || exit /b
-exit
+pause
+exi

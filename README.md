@@ -19,9 +19,13 @@
 4. **MSYS2**
     - Скачайте с официального сайта: [MSYS2]
     - Запустите установщик (msys2-x86_64-...exe) и следуйте инструкциям
-    - Установите компиляторы и базовые инструменты:<br/>
-      `pacman -Syu`<br/> 
-      `pacman -S mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-toolchain`<br/>
+    - Запустите MSYS2 MSYS
+    - Выполните:<br/>
+      `pacman -Syu`<br/>
+      `pacman -Su`<br/>
+    - Запустите MSYS2 UCRT64:<br/>
+    - Выполните:<br/>
+      `pacman -S mingw-w64-ucrt-x86_64-gcc`
     - чтобы убедиться в установке:<br/>
       `gcc --version`<br/>
       `g++ --version`<br/>

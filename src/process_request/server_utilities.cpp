@@ -11,7 +11,7 @@
 //#include "../OpenSSL-Win64/include/openssl/rand.h"
 #include "../../includes/OpenSSL-Win64/include/openssl/rand.h"
 #include "../utility/utility.h" 
-#include "../calculator/src/calculator.cpp"
+#include "../calc/src/calculator.cpp"
 
 using namespace std;
 

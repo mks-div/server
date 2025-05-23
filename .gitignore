@@ -1,9 +1,5 @@
 build/
-includes/*
-!includes/.gitkeep
-!includes/sqlite3.dll
-!includes/sqlite3.h
+includes/OpenSSL-Win64/*
 .vscode/
-
 *not_used/
 *.exe

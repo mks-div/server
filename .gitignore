@@ -1,5 +1,10 @@
-unused/
 build/
+includes/OpenSSL-Win64/*
 .vscode/
+<<<<<<< HEAD
 *.exe
 *modules_test.cpp
+=======
+*not_used/
+*.exe
+>>>>>>> develop
